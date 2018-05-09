@@ -1,13 +1,17 @@
 package edu.orangecoastcollege.cs272.ic13.view;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import edu.orangecoastcollege.cs272.ic13.controller.Controller;
 import edu.orangecoastcollege.cs272.ic13.model.VideoGame;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
 // TODO: Implement the Initializable interface
-public class VideoGamesListScene {
+public class VideoGamesListScene implements Initializable{
 
 	private static Controller controller = Controller.getInstance();
 
@@ -29,17 +33,28 @@ public class VideoGamesListScene {
 	{
 		//TODO: Complete this method
 		// 1) Get the selected video game from the allVideoGamesLV (use getSelectedItem())
+	    VideoGame selectedGame = allVideoGamesLV.getSelectionModel().getSelectedItem();
 		// 2) Use the controller to add the selected game to the inventory
+	    return controller.addGameToUsersInventory(selectedGame);
 		// 3) Return the result (as a boolean)
 
-		return false;
 	}
 	
 	@FXML
 	public void viewInventory()
 	{
 		//TODO: Complete this method
-		// 1) Use the ViewNavigator to load the VIEW_INVENTORY_SCENE with the title “User’s Video Games” 
+		// 1) Use the ViewNavigator to load the VIEW_INVENTORY_SCENE with the title ï¿½Userï¿½s Video Gamesï¿½ 
+	    ViewNavigator.loadScene("User's Video Games", ViewNavigator.VIEW_INVENTORY_SCENE);
 	}
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1)
+    {
+        allVideoGamesLV.setItems(controller.getAllVideoGames());
+        platformsCB.setItems(controller.getDistinctPlatforms());
+        publishersCB.setItems(controller.getDistinctPublishers());
+        
+    }
 
 }
